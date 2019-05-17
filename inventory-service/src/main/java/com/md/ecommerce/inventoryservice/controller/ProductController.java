@@ -1,7 +1,9 @@
 package com.md.ecommerce.inventoryservice.controller;
 
 import com.md.ecommerce.inventoryservice.domain.Product;
+import com.md.ecommerce.inventoryservice.mapper.ProductMapper;
 import com.md.ecommerce.inventoryservice.service.ProductService;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,25 +14,24 @@ import java.util.List;
 @RequestMapping("api/inventory/products")
 public class ProductController {
 
-    private final ProductService productService;
-
     @Autowired
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
+    private ProductService productService;
+
+    private ProductMapper productMapper;
 
     @GetMapping("/{code}")
     public Product findByCode(@PathVariable ("code") String code) {
-        return productService.findByCode(code);
+        return Mappers.getMapper(ProductMapper.class).productEntityToProduct(productService.findByCode(code));
     }
 
     @GetMapping("")
     public List<Product> findAll() {
-        return productService.findAll();
+        return Mappers.getMapper(ProductMapper.class).productEntityListToProductEntityList(productService.findAll());
     }
 
     @PostMapping
     public Product save(@RequestBody Product product) {
-        return productService.save(product);
+        return Mappers.getMapper(ProductMapper.class).productEntityToProduct(
+                productService.save(Mappers.getMapper(ProductMapper.class).productToProductEntity(product)));
     }
 }

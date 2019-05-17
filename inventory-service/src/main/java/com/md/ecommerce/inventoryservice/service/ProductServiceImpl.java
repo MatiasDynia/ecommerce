@@ -1,6 +1,6 @@
 package com.md.ecommerce.inventoryservice.service;
 
-import com.md.ecommerce.inventoryservice.domain.Product;
+import com.md.ecommerce.inventoryservice.entity.ProductEntity;
 import com.md.ecommerce.inventoryservice.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,17 +18,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findByCode(String code) {
+    public ProductEntity findByCode(String code) {
         return productRepository.findByCode(code);
     }
 
     @Override
-    public List<Product> findAll() {
+    public List<ProductEntity> findAll() {
         return productRepository.findAll();
     }
 
     @Override
-    public Product save(Product product) {
+    public ProductEntity save(ProductEntity product) {
         return productRepository.save(product);
     }
 }
