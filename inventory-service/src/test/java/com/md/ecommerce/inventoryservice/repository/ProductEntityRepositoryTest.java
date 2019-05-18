@@ -30,18 +30,20 @@ public class ProductEntityRepositoryTest {
         assertEquals(productToSave.getCode(), productFound.getCode());
         assertEquals(productToSave.getName(), productFound.getName());
         assertEquals(productToSave.getDescription(), productFound.getDescription());
-        assertEquals(productToSave.getPriceEntity().getAmount(), productFound.getPriceEntity().getAmount());
+        assertEquals(productToSave.getPrice().getAmount(), productFound.getPrice().getAmount());
+        assertEquals(productToSave.getStock(), productFound.getStock());
     }
 
     private ProductEntity getStubProductEntity() {
-        ProductEntity productEntity = new ProductEntity();
-        productEntity.setCode("12345");
-        productEntity.setName("testing product");
-        productEntity.setDescription("a testing product");
-        PriceEntity priceEntity = new PriceEntity();
-        priceEntity.setAmount(25.5);
-        productEntity.setPriceEntity(priceEntity);
+        ProductEntity product = new ProductEntity();
+        product.setCode("12345");
+        product.setName("testing product");
+        product.setDescription("a testing product");
+        product.setStock(12);
+        PriceEntity price = new PriceEntity();
+        price.setAmount(25.5);
+        product.setPrice(price);
 
-        return productEntity;
+        return product;
     }
 }

@@ -18,5 +18,6 @@ public class ProductEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "price_id", referencedColumnName = "id")
-    private PriceEntity priceEntity;
+    private PriceEntity price;
+    private int stock;
 }

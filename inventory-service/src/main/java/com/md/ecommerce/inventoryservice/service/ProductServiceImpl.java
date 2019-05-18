@@ -5,8 +5,6 @@ import com.md.ecommerce.inventoryservice.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -23,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductEntity> findAll() {
+    public Iterable<ProductEntity> findAll() {
         return productRepository.findAll();
     }
 

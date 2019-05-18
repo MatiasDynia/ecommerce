@@ -1,11 +1,7 @@
 package com.md.ecommerce.inventoryservice.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.md.ecommerce.inventoryservice.domain.Price;
 import com.md.ecommerce.inventoryservice.domain.Product;
-import com.md.ecommerce.inventoryservice.entity.PriceEntity;
 import com.md.ecommerce.inventoryservice.entity.ProductEntity;
-import com.md.ecommerce.inventoryservice.mapper.ProductMapper;
 import com.md.ecommerce.inventoryservice.service.ProductService;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,9 +30,6 @@ public class ProductEntityControllerTest {
     @Mock
     private ProductService productService;
 
-    @Mock
-    private ProductMapper productMapper;
-
     private MockMvc mockMvc;
 
     @Before
@@ -53,10 +46,9 @@ public class ProductEntityControllerTest {
         product.setCode("12345");
 
         when(productService.findByCode(productEntity.getCode())).thenReturn(productEntity);
-        when(productMapper.productEntityToProduct(productEntity)).thenReturn(product);
 
-        mockMvc.perform(get("/api/inventory/products/" + productEntity.getCode()))
-                .andExpect(jsonPath("$.code").value(productEntity.getCode()))
+        mockMvc.perform(get("/api/inventory/products/" + product.getCode()))
+                .andExpect(jsonPath("$.code").value(product.getCode()))
                 .andExpect(status().isOk());
     }
 
