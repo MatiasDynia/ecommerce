@@ -11,4 +11,4 @@ subprojects {
 	}
 }
 
-build.dependsOn ':ecommerce-commons:publishToMavenLocal'
+build.dependsOn ':ecommerce-commons:publish'

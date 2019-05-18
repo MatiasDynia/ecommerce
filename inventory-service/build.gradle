@@ -21,6 +21,8 @@ repositories {
 }
 
 dependencies {
+	//Added jar in local to pass travis ci build
+	implementation files('localRepository/com/md/ecommerce/ecommerce-commons/1.0.0-SNAPSHOT/ecommerce-commons-1.0.0-SNAPSHOT.jar')
 	implementation 'com.md.ecommerce:ecommerce-commons:1.0.0-SNAPSHOT'
 	implementation 'org.modelmapper:modelmapper:2.2.0'
 	annotationProcessor 'org.projectlombok:lombok'
