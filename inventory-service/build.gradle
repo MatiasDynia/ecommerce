@@ -17,9 +17,11 @@ configurations {
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 }
 
 dependencies {
+	implementation 'com.md.ecommerce:ecommerce-commons:1.0.0-SNAPSHOT'
 	implementation 'org.modelmapper:modelmapper:2.2.0'
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

@@ -1,4 +1,4 @@
-package com.md.ecommerce.inventoryservice.domain;
+package com.md.ecommerce.commons.dto;
 
 import lombok.Data;
 
