@@ -1,12 +1,12 @@
 #Gradle
 .gradle
-/build/
+*/build/
 
 #Intellij
 .idea
 *.iws
 *.iml
-/out/
+*/out/
 
 #Mac
 .DS_Store
