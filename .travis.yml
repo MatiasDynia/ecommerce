@@ -1,3 +1,5 @@
+sudo: required
+
 language: java
 jdk: oraclejdk8
 
@@ -21,4 +23,4 @@ after_success:
   - export INVENTORY_SERVICE=matiasdynia/ecommerce-inventory-service
   - docker build -t $INVENTORY_SERVICE:$COMMIT ./inventory-service
   - docker tag $INVENTORY_SERVICE:$COMMIT $INVENTORY_SERVICE:$TAG
-  - docker push $INVENTORY-SERVICE
+  - docker push $INVENTORY_SERVICE
