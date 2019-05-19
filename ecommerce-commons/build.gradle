@@ -1,0 +1,40 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+group = 'com.md.ecommerce'
+version = '1.0.0'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.md.ecommerce'
+            artifactId = 'ecommerce-commons'
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "file:/${project.projectDir}/../localRepository"
+        }
+    }
+}
+
+task deleteOldLibraries(type: Delete) {
+    delete fileTree('../localRepository')
+}

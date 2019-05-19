@@ -1,6 +1,6 @@
 package com.md.ecommerce.inventoryservice.controller;
 
-import com.md.ecommerce.inventoryservice.domain.Product;
+import com.md.ecommerce.commons.dto.Product;
 import com.md.ecommerce.inventoryservice.entity.ProductEntity;
 import com.md.ecommerce.inventoryservice.mapper.Dto;
 import com.md.ecommerce.inventoryservice.service.ProductService;

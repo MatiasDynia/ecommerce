@@ -17,9 +17,12 @@ configurations {
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 }
 
 dependencies {
+	//Added jar in local to pass travis ci build
+	implementation files('../localRepository/com/md/ecommerce/ecommerce-commons/1.0.0/ecommerce-commons-1.0.0.jar')
 	implementation 'org.modelmapper:modelmapper:2.2.0'
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

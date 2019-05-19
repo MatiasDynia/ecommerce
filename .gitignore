@@ -10,3 +10,9 @@
 
 #Mac
 .DS_Store
+
+#Jars for travis ci
+localRepository/**/*.md5
+localRepository/**/*.sha1
+localRepository/**/*.pom*
+localRepository/**/*.xml*

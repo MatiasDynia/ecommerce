@@ -10,3 +10,5 @@ subprojects {
 		mavenCentral()
 	}
 }
+
+build.dependsOn ':ecommerce-commons:publish'

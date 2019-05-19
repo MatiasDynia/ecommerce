@@ -6,3 +6,4 @@ pluginManagement {
 rootProject.name = 'ecommerce'
 
 include 'inventory-service'
+include 'ecommerce-commons'
