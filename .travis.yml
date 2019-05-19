@@ -22,5 +22,5 @@ after_success:
   #INVENTORY SERVICE
   - export INVENTORY_SERVICE=matiasdynia/ecommerce-inventory-service
   - docker build -t $INVENTORY_SERVICE:$COMMIT ./inventory-service
-  - docker tag $INVENTORY_SERVICE:$COMMIT $INVENTORY_SERVICE:$TAG
+  - docker tag $INVENTORY_SERVICE:$TAG
   - docker push $INVENTORY_SERVICE
