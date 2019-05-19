@@ -15,6 +15,10 @@ configurations {
 	}
 }
 
+bootJar {
+	archiveFileName = 'inventory-service.jar'
+}
+
 repositories {
 	mavenCentral()
 	mavenLocal()
