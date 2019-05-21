@@ -9,6 +9,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static junit.framework.TestCase.assertEquals;
 
 @DataJpaTest
@@ -35,15 +38,18 @@ public class ProductEntityRepositoryTest {
     }
 
     private ProductEntity getStubProductEntity() {
-        ProductEntity product = new ProductEntity();
-        product.setCode("12345");
-        product.setName("testing product");
-        product.setDescription("a testing product");
-        product.setStock(12);
-        PriceEntity price = new PriceEntity();
-        price.setAmount(25.5);
-        product.setPrice(price);
 
-        return product;
+        List<ProductEntity> listOfProducts = new ArrayList<>();
+        listOfProducts.add(ProductEntity.builder().code("1").build());
+        listOfProducts.add(ProductEntity.builder().code("2").build());
+        listOfProducts.add(ProductEntity.builder().code("3").build());
+
+        return ProductEntity.builder()
+                .code("12345")
+                .name("testing product")
+                .description("a testing product")
+                .price(PriceEntity.builder().amount(25.5).build())
+                .stock(12)
+                .build();
     }
 }
