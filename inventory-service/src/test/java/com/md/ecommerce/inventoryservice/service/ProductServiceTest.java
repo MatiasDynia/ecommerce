@@ -60,7 +60,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void shouldCreateProduct() {
+    public void shouldSaveProduct() {
 
         ProductEntity product = ProductEntity.builder()
                 .code("12345")
@@ -72,7 +72,7 @@ public class ProductServiceTest {
 
         when(productRepository.save(product)).thenReturn(product);
 
-        ProductEntity productSaved = productRepository.save(product);
+        ProductEntity productSaved = productService.save(product);
 
         assertEquals(product, productSaved);
         verify(productRepository).save(product);
