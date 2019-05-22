@@ -20,8 +20,14 @@ after_success:
   #TAG
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
 
-  #INVENTORY SERVICE
-  - export INVENTORY_SERVICE=matiasdynia/ecommerce-inventory-service
+  #CONFIG SERVER
+  - export CONFIG_SERVER=matiasdynia/ecommerce-inventory-service
   - docker build -t $INVENTORY_SERVICE:$TAG ./inventory-service
   - docker tag $INVENTORY_SERVICE:$TAG
   - docker push $INVENTORY_SERVICE
+
+  #INVENTORY SERVICE
+  - export $CONFIG_SERVER=matiasdynia/ecommerce-config-server
+  - docker build -t $CONFIG_SERVER:$TAG ./config-server
+  - docker tag $CONFIG_SERVER:$TAG
+  - docker push $CONFIG_SERVER
