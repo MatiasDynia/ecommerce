@@ -1,0 +1,14 @@
+version: '1'
+services:
+  mariadb:
+    image: mariadb:10.2
+    container_name: clientservicedatabase
+    network_mode: "host"
+    ports:
+      -  "3307:3306"
+    environment:
+      MYSQL_DATABASE: "client"
+      MYSQL_USER: "matias"
+      MYSQL_PASSWORD: "matiasd"
+      MYSQL_ROOT_PASSWORD: "matiasd"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
