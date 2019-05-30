@@ -21,7 +21,7 @@ ext {
 }
 
 bootJar {
-    archiveFileName = 'shop-service.jar'
+    archiveFileName = 'shopping-service.jar'
 }
 
 repositories {
