@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class ProductEntityControllerTest {
+public class ProductControllerTest {
 
     @InjectMocks
     private ProductController productController;

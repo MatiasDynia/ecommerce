@@ -32,6 +32,12 @@ after_success:
   - docker tag $CLIENT_SERVICE:$TAG
   - docker push $CLIENT_SERVICE
 
+  #SHOPPING SERVICE
+  - export SHOPPING_SERVICE=matiasdynia/ecommerce-shopping-service
+  - docker build -t $SHOPPING_SERVICE:$TAG ./shopping-service
+  - docker tag $SHOPPING_SERVICE:$TAG
+  - docker push $SHOPPING_SERVICE
+
   #CONFIG SERVER
   - export $CONFIG_SERVER=matiasdynia/ecommerce-config-server
   - docker build -t $CONFIG_SERVER:$TAG ./config-server
