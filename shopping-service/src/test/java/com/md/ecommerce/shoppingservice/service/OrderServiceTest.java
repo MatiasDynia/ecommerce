@@ -27,16 +27,19 @@ public class OrderServiceTest {
     @Mock
     private OrderRepository orderRepository;
 
+    @Mock
+    private SequenceGeneratorService sequenceGeneratorService;
+
     @Test
     public void shouldFindOrderById() {
 
         Optional<OrderEntity> order = Optional.of(TestUtils.createTestOrder());
 
-        when(orderRepository.findById(order.get().get_id())).thenReturn(order);
+        when(orderRepository.findById(order.get().getId())).thenReturn(order);
 
-        OrderEntity orderFound = orderService.findById(order.get().get_id().toString());
+        OrderEntity orderFound = orderService.findById(order.get().getId());
 
-        verify(orderRepository).findById(order.get().get_id());
+        verify(orderRepository).findById(order.get().getId());
         assertEquals(order.get(), orderFound);
     }
 
@@ -60,6 +63,7 @@ public class OrderServiceTest {
         OrderEntity order = TestUtils.createTestOrder();
 
         when(orderRepository.save(order)).thenReturn(order);
+        when(sequenceGeneratorService.generateSequence(OrderEntity.SEQUENCE_NAME)).thenReturn("1");
 
         OrderEntity orderSaved = orderService.saveOrder(order);
 

@@ -24,9 +24,9 @@ public class OrderRepositoryTest {
 
         orderRepository.save(order);
 
-        OrderEntity ordersFound = orderRepository.findById(order.get_id()).get();
+        OrderEntity ordersFound = orderRepository.findById(order.getId()).get();
 
-        assertEquals(order.get_id(), ordersFound.get_id());
+        assertEquals(order.getId(), ordersFound.getId());
         assertEquals(order.getDate(), ordersFound.getDate());
         assertEquals(order.getOrderState(), ordersFound.getOrderState());
         assertEquals(order.getProducts().get(0).getProduct().getCode(),

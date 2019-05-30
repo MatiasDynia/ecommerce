@@ -63,9 +63,9 @@ public class OrderControllerTest {
     public void shouldFindOrderById() throws Exception {
         OrderEntity order = TestUtils.createTestOrder();
 
-        when(orderService.findById(order.get_id().toString())).thenReturn(order);
+        when(orderService.findById(order.getId())).thenReturn(order);
 
-        mockMvc.perform(get("/api/shopping/order/" + order.get_id().toString()))
+        mockMvc.perform(get("/api/shopping/order/" + order.getId()))
                 .andExpect(jsonPath("$.products.[0].product.code")
                         .value(order.getProducts().get(0).getProduct().getCode()))
                 .andExpect(jsonPath("$.products.[1].product.code")

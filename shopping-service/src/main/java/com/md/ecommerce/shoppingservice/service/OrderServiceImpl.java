@@ -16,9 +16,12 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
+
     @Override
     public OrderEntity findById(String id) {
-        Optional<OrderEntity> orderFound = orderRepository.findById(new ObjectId(id));
+        Optional<OrderEntity> orderFound = orderRepository.findById(id);
 
         if(orderFound.isPresent()) {
             return orderFound.get();
@@ -34,6 +37,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderEntity saveOrder(OrderEntity orderEntity) {
+        orderEntity.setId(sequenceGeneratorService.generateSequence(OrderEntity.SEQUENCE_NAME));
+
         return orderRepository.save(orderEntity);
     }
 }

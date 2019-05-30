@@ -1,6 +1,8 @@
 package com.md.ecommerce.shoppingservice.controller;
 
+import com.md.ecommerce.commons.dto.Order;
 import com.md.ecommerce.shoppingservice.entity.OrderEntity;
+import com.md.ecommerce.shoppingservice.mapper.OrderMapper;
 import com.md.ecommerce.shoppingservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +22,8 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public OrderEntity findOrderById(@PathVariable("id") String id) {
-        return orderService.findById(id);
+    public Order findOrderById(@PathVariable("id") String id) {
+        return OrderMapper.INSTANCE.map(orderService.findById(id));
     }
 
     @PostMapping("")

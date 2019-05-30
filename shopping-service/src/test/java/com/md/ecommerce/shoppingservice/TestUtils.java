@@ -46,7 +46,7 @@ public class TestUtils {
                 .build());
 
         return OrderEntity.builder()
-                ._id(new ObjectId("58d1c36efb0cac4e15afd278"))
+                .id("1")
                 .client(orderClient)
                 .products(productList)
                 .orderState(OrderStateEntity.PREPARING)
