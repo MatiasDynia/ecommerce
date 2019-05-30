@@ -1,5 +1,6 @@
 package com.md.ecommerce.shoppingservice.service;
 
+import com.md.ecommerce.commons.dto.Order;
 import com.md.ecommerce.shoppingservice.TestUtils;
 import com.md.ecommerce.shoppingservice.entity.OrderEntity;
 import com.md.ecommerce.shoppingservice.repository.OrderRepository;
@@ -37,10 +38,10 @@ public class OrderServiceTest {
 
         when(orderRepository.findById(order.get().getId())).thenReturn(order);
 
-        OrderEntity orderFound = orderService.findById(order.get().getId());
+        Order orderFound = orderService.findById(order.get().getId());
 
         verify(orderRepository).findById(order.get().getId());
-        assertEquals(order.get(), orderFound);
+        assertEquals(order.get().getId(), orderFound.getId());
     }
 
     @Test
@@ -52,7 +53,7 @@ public class OrderServiceTest {
 
         when(orderRepository.findAll()).thenReturn(orderEntities);
 
-        Iterable<OrderEntity> foundOrders = orderService.findAllOrders();
+        Iterable<Order> foundOrders = orderService.findAllOrders();
 
         verify(orderRepository).findAll();
         assertEquals(3, IterableUtil.sizeOf(foundOrders));
@@ -65,9 +66,9 @@ public class OrderServiceTest {
         when(orderRepository.save(order)).thenReturn(order);
         when(sequenceGeneratorService.generateSequence(OrderEntity.SEQUENCE_NAME)).thenReturn("1");
 
-        OrderEntity orderSaved = orderService.saveOrder(order);
+        Order orderSaved = orderService.saveOrder(order);
 
         verify(orderRepository).save(order);
-        assertEquals(order, orderSaved);
+        assertEquals(order.getId(), orderSaved.getId());
     }
 }

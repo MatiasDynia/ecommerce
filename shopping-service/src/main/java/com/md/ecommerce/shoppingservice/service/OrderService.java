@@ -1,12 +1,11 @@
 package com.md.ecommerce.shoppingservice.service;
 
+import com.md.ecommerce.commons.dto.Order;
 import com.md.ecommerce.shoppingservice.entity.OrderEntity;
-
-import java.util.Optional;
 
 public interface OrderService {
 
-    OrderEntity findById(String id);
-    Iterable<OrderEntity> findAllOrders();
-    OrderEntity saveOrder(OrderEntity orderEntity);
+    Order findById(String id);
+    Iterable<Order> findAllOrders();
+    Order saveOrder(OrderEntity orderEntity);
 }

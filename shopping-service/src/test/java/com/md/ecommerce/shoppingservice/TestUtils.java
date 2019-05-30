@@ -1,18 +1,23 @@
 package com.md.ecommerce.shoppingservice;
 
 import com.md.ecommerce.commons.dto.Client;
+import com.md.ecommerce.commons.dto.Order;
 import com.md.ecommerce.commons.dto.Price;
 import com.md.ecommerce.commons.dto.Product;
 import com.md.ecommerce.shoppingservice.entity.OrderEntity;
 import com.md.ecommerce.shoppingservice.entity.OrderProductEntity;
 import com.md.ecommerce.shoppingservice.entity.OrderStateEntity;
-import org.bson.types.ObjectId;
+import com.md.ecommerce.shoppingservice.mapper.OrderMapper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestUtils {
+
+    public static Order createTestOrderDto() {
+        return OrderMapper.INSTANCE.map(createTestOrder());
+    }
 
     public static OrderEntity createTestOrder() {
         Client orderClient = Client.builder()

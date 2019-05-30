@@ -1,10 +1,10 @@
 package com.md.ecommerce.shoppingservice.service;
 
+import com.md.ecommerce.commons.dto.Order;
 import com.md.ecommerce.shoppingservice.entity.OrderEntity;
 import com.md.ecommerce.shoppingservice.exception.OrderNotFoundException;
+import com.md.ecommerce.shoppingservice.mapper.OrderMapper;
 import com.md.ecommerce.shoppingservice.repository.OrderRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,25 +20,25 @@ public class OrderServiceImpl implements OrderService {
     private SequenceGeneratorService sequenceGeneratorService;
 
     @Override
-    public OrderEntity findById(String id) {
+    public Order findById(String id) {
         Optional<OrderEntity> orderFound = orderRepository.findById(id);
 
         if(orderFound.isPresent()) {
-            return orderFound.get();
+            return OrderMapper.INSTANCE.map(orderFound.get());
         } else {
             throw new OrderNotFoundException("Order " + id + " not found!!");
         }
     }
 
     @Override
-    public Iterable<OrderEntity> findAllOrders() {
-        return orderRepository.findAll();
+    public Iterable<Order> findAllOrders() {
+        return OrderMapper.INSTANCE.map(orderRepository.findAll());
     }
 
     @Override
-    public OrderEntity saveOrder(OrderEntity orderEntity) {
+    public Order saveOrder(OrderEntity orderEntity) {
         orderEntity.setId(sequenceGeneratorService.generateSequence(OrderEntity.SEQUENCE_NAME));
 
-        return orderRepository.save(orderEntity);
+        return OrderMapper.INSTANCE.map(orderRepository.save(orderEntity));
     }
 }
