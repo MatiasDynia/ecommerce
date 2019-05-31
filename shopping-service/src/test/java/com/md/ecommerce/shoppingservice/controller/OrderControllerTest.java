@@ -122,8 +122,10 @@ public class OrderControllerTest {
                 "\t\t\"address\":\"fake address 123\",\n" +
                 "\t\t\"phone\":\"123456789\"},\n" +
                 "\t\"orderState\":\"PREPARING\",\n" +
-                "\t\"date\":[2019,5,30]\n" +
+                "\t\"date\":[2019,5,31]\n" +
                 "}"))
+                .andExpect(jsonPath("$.id")
+                        .value(order.getId()))
                 .andExpect(jsonPath("$.products.[0].product.code")
                         .value(order.getProducts().get(0).getProduct().getCode()))
                 .andExpect(jsonPath("$.products.[1].product.code")
