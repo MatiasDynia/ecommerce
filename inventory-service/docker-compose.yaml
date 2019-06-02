@@ -3,7 +3,7 @@ services:
   mysqldb:
     image: mysql:5.7
     container_name: inventoryservicedatabase
-    network_mode: "host"
+    #network_mode: "host"
     ports:
       -  "3306:3306"
     environment:

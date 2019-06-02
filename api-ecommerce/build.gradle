@@ -38,9 +38,11 @@ dependencyManagement {
 dependencies {
     //Added jar in local to pass travis ci build
     implementation files('../localRepository/com/md/ecommerce/ecommerce-commons/1.0.0/ecommerce-commons-1.0.0.jar')
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
-    annotationProcessor 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

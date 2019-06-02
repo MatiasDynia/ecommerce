@@ -45,7 +45,13 @@ after_success:
   - docker push $API_ECOMMERCE
 
   #CONFIG SERVER
-  - export $CONFIG_SERVER=matiasdynia/ecommerce-config-server
+  - export CONFIG_SERVER=matiasdynia/ecommerce-config-server
   - docker build -t $CONFIG_SERVER:$TAG ./config-server
   - docker tag $CONFIG_SERVER:$TAG
   - docker push $CONFIG_SERVER
+
+  #REGISTRY SERVER
+  - export REGISTRY_SERVER=matiasdynia/ecommerce-registry-server
+  - docker build -t $REGISTRY_SERVER:$TAG ./registry-server
+  - docker tag $REGISTRY_SERVER:$TAG
+  - docker push $REGISTRY_SERVER
