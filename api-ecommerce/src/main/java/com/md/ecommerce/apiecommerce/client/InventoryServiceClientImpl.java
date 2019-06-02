@@ -13,8 +13,8 @@ import java.util.List;
 @Service
 public class InventoryServiceClientImpl implements InventoryServiceClient {
 
-    public static final String INVENTORY_SERVICE_HOST = "http://localhost:9001";
-    public static final String BASE_INVENTORY_PRODUCTS_SERVICE_URL = "/api/inventory/products/";
+    static final String INVENTORY_SERVICE_HOST = "http://localhost:9001";
+    static final String BASE_INVENTORY_PRODUCTS_SERVICE_URL = "/api/inventory/products/";
 
     private final RestTemplate restTemplate;
 
@@ -36,7 +36,7 @@ public class InventoryServiceClientImpl implements InventoryServiceClient {
     }
 
     @Override
-    public Product getProductByCode(String code) {
+    public Product findProductByCode(String code) {
 
         return restTemplate
                 .getForObject(INVENTORY_SERVICE_HOST + BASE_INVENTORY_PRODUCTS_SERVICE_URL +"{code}",

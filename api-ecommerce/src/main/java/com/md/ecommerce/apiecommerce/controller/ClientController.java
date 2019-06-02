@@ -23,9 +23,9 @@ public class ClientController {
         return clientServiceClient.getAllClients();
     }
 
-    @GetMapping("/{id}")
-    public Client findClientById(@PathVariable String id) {
-        return clientServiceClient.findClientById(id);
+    @GetMapping("/{clientId}")
+    public Client findClientById(@PathVariable String clientId) {
+        return clientServiceClient.findClientById(clientId);
     }
 
     @PostMapping

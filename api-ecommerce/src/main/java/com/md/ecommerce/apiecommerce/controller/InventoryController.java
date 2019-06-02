@@ -23,9 +23,9 @@ public class InventoryController {
         return inventoryServiceClient.getAllProducts();
     }
 
-    @GetMapping("/{code}")
-    public Product getProductByCode(@PathVariable String code) {
-        return inventoryServiceClient.getProductByCode(code);
+    @GetMapping("/{ProductCode}")
+    public Product getProductByCode(@PathVariable String ProductCode) {
+        return inventoryServiceClient.findProductByCode(ProductCode);
     }
 
     @PostMapping

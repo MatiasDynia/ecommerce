@@ -79,7 +79,7 @@ public class InventoryServiceClientImplTest {
     }
 
     @Test
-    public void shouldGetProductByCode() {
+    public void shouldFindProductByCode() {
 
         String productJson = "{\n" +
                 "    \"code\": \"54\",\n" +
@@ -97,7 +97,7 @@ public class InventoryServiceClientImplTest {
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withSuccess(productJson, MediaType.APPLICATION_JSON));
 
-        Product product = inventoryServiceClient.getProductByCode("54");
+        Product product = inventoryServiceClient.findProductByCode("54");
 
         BDDAssertions.then(product.getCode()).isEqualTo("54");
         BDDAssertions.then(product.getName()).isEqualTo("product54");

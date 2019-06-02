@@ -1,35 +1,54 @@
 package com.md.ecommerce.apiecommerce.client;
 
+import com.md.ecommerce.apiecommerce.domain.OrderRequest;
+import com.md.ecommerce.apiecommerce.TestUtils;
+import com.md.ecommerce.commons.dto.Client;
 import com.md.ecommerce.commons.dto.Order;
 import com.md.ecommerce.commons.dto.OrderState;
+import com.md.ecommerce.commons.dto.Product;
 import org.assertj.core.api.BDDAssertions;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.md.ecommerce.apiecommerce.client.ShoppingServiceClientImpl.BASE_SHOPPING_ORDERS_SERVICE_URL;
 import static com.md.ecommerce.apiecommerce.client.ShoppingServiceClientImpl.SHOPPING_SERVICE_HOST;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class ShoppingServiceClientImplTest {
 
-    private RestTemplate restTemplate;
+    @Mock
+    private InventoryServiceClient inventoryServiceClient;
+
+    @Mock
+    private ClientServiceClient clientServiceClient;
+
+    @InjectMocks
     private ShoppingServiceClientImpl shoppingServiceClient;
+
     private MockRestServiceServer server;
 
     @Before
     public void setup() {
-        restTemplate = new RestTemplate();
-        shoppingServiceClient = new ShoppingServiceClientImpl(restTemplate);
+        RestTemplate restTemplate = new RestTemplate();
+        shoppingServiceClient = new ShoppingServiceClientImpl(inventoryServiceClient, clientServiceClient, restTemplate);
         server = MockRestServiceServer.bindTo(restTemplate).build();
     }
 
@@ -193,8 +212,8 @@ public class ShoppingServiceClientImplTest {
     }
 
     @Test
-    public void saveOrder() {
-        String orderToBeSavedJson = "{\n" +
+    public void shouldCreateOrderByProductsAndClient() {
+        String orderSavedJson = "{\n" +
                 "\t\t\"id\":\"1\",\n" +
                 "\t\t\"products\":[\n" +
                 "\t\t\t{\n" +
@@ -211,27 +230,42 @@ public class ShoppingServiceClientImplTest {
                 "\t\t\t\t\"quantity\":2\n" +
                 "\t\t\t}],\n" +
                 "\t\t\"client\":{\n" +
-                "\t\t\t\"id\":\"12345\",\n" +
+                "\t\t\t\"id\":\"198\",\n" +
                 "\t\t\t\"firstName\":\"John\",\n" +
                 "\t\t\t\"lastName\":\"Doe\",\n" +
                 "\t\t\t\"address\":\"fake address 123\",\n" +
                 "\t\t\t\"phone\":\"123456789\"},\n" +
-                "\t\t\"orderState\":\"PREPARING\",\n" +
+                "\t\t\"orderState\":\"PENDING\",\n" +
                 "\t\t\"date\":[2019,5,30],\n" +
                 "\t\t\"total\": 166\n" +
                 "\t}";
 
+        Product product = TestUtils.createTestProduct("123");
+        Client client = TestUtils.createTestClient("198");
+
+        OrderRequest orderRequest = OrderRequest.builder()
+                .client(client.getId())
+                .products(new HashMap<String, Integer>() {{
+                    put(product.getCode(), 5);
+                }})
+                .build();
+
+        when(clientServiceClient.findClientById(orderRequest.getClient())).thenReturn(client);
+        when(inventoryServiceClient
+                .findProductByCode(orderRequest.getProducts().entrySet().stream().findAny().get().getKey()))
+                .thenReturn(product);
+
         server.expect(requestTo(SHOPPING_SERVICE_HOST + BASE_SHOPPING_ORDERS_SERVICE_URL))
                 .andExpect(method(HttpMethod.POST))
-                .andRespond(withSuccess(orderToBeSavedJson, MediaType.APPLICATION_JSON));
+                .andRespond(withSuccess(orderSavedJson, MediaType.APPLICATION_JSON));
 
-        Order orderFound = shoppingServiceClient.saveOrder(any(Order.class));
+        Order orderSaved = shoppingServiceClient.createOrder(orderRequest);
 
-        BDDAssertions.then(orderFound.getId()).isEqualTo("1");
-        BDDAssertions.then(orderFound.getClient().getId()).isEqualTo("12345");
-        BDDAssertions.then(orderFound.getProducts().get(0).getProduct().getCode()).isEqualTo("123");
-        BDDAssertions.then(orderFound.getOrderState()).isEqualTo(OrderState.PREPARING);
-        BDDAssertions.then(orderFound.getDate()).isEqualTo(LocalDate.of(2019,5,30));
-        BDDAssertions.then(orderFound.getTotal()).isEqualTo(166);
+        BDDAssertions.then(orderSaved.getClient().getId()).isEqualTo(orderRequest.getClient());
+        BDDAssertions.then(orderSaved.getProducts().get(0).getProduct().getCode())
+                .isEqualTo(orderRequest.getProducts().entrySet().stream().findAny().get().getKey());
+        BDDAssertions.then(orderSaved.getOrderState()).isEqualTo(OrderState.PENDING);
+        BDDAssertions.then(orderSaved.getDate()).isEqualTo(LocalDate.of(2019,5,30));
+        BDDAssertions.then(orderSaved.getTotal()).isEqualTo(166);
     }
 }

@@ -7,6 +7,6 @@ import java.util.List;
 public interface InventoryServiceClient {
 
     public List<Product> getAllProducts();
-    public Product getProductByCode(String code);
+    public Product findProductByCode(String code);
     public Product saveProduct(Product product);
 }
