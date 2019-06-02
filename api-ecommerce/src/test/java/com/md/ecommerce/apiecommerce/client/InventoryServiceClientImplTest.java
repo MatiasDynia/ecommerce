@@ -1,5 +1,6 @@
 package com.md.ecommerce.apiecommerce.client;
 
+import com.md.ecommerce.commons.dto.Price;
 import com.md.ecommerce.commons.dto.Product;
 import org.assertj.core.api.BDDAssertions;
 import org.junit.Before;
@@ -16,7 +17,6 @@ import java.util.List;
 
 import static com.md.ecommerce.apiecommerce.client.InventoryServiceClientImpl.BASE_INVENTORY_PRODUCTS_SERVICE_URL;
 import static com.md.ecommerce.apiecommerce.client.InventoryServiceClientImpl.INVENTORY_SERVICE_HOST;
-import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
@@ -119,13 +119,21 @@ public class InventoryServiceClientImplTest {
                 "\"stock\" : 5\n" +
                 "}";
 
+        Product productToSave = Product.builder()
+                .code("24")
+                .name("product 24")
+                .description("a product 24")
+                .price(Price.builder().amount(52.4).build())
+                .stock(5)
+                .build();
+
         MockRestServiceServer server = MockRestServiceServer.bindTo(restTemplate).build();
 
         server.expect(requestTo(INVENTORY_SERVICE_HOST + BASE_INVENTORY_PRODUCTS_SERVICE_URL))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(withSuccess(productToSaveJson, MediaType.APPLICATION_JSON));
 
-        Product productSaved = inventoryServiceClient.saveProduct(any(Product.class));
+        Product productSaved = inventoryServiceClient.saveProduct(productToSave);
 
         BDDAssertions.then(productSaved.getCode()).isEqualTo("24");
     }

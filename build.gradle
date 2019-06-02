@@ -9,6 +9,13 @@ subprojects {
 	repositories {
 		mavenCentral()
 	}
+
+	test {
+		testLogging {
+			events "passed", "skipped", "failed"
+			exceptionFormat "full"
+		}
+	}
 }
 
 build.dependsOn ':ecommerce-commons:publish'

@@ -112,13 +112,21 @@ public class ClientServiceClientImplTest {
                 "            \"phone\": \"123456789\"\n" +
                 "            }";
 
+        Client clientToSave = Client.builder()
+                .id("12345")
+                .firstName("John")
+                .lastName("Doe")
+                .address("fake address 123")
+                .phone("123456789")
+                .build();
+
         MockRestServiceServer server = MockRestServiceServer.bindTo(restTemplate).build();
 
         server.expect(requestTo(CLIENT_SERVICE_HOST + BASE_CLIENT_SERVICE_URL))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(withSuccess(clientToSaveJson, MediaType.APPLICATION_JSON));
 
-        Client clientSaved = clientServiceClient.saveClient(any(Client.class));
+        Client clientSaved = clientServiceClient.saveClient(clientToSave);
 
         BDDAssertions.then(clientSaved.getId()).isEqualTo("12345");
         BDDAssertions.then(clientSaved.getFirstName()).isEqualTo("John");
