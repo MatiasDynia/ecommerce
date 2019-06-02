@@ -38,6 +38,12 @@ after_success:
   - docker tag $SHOPPING_SERVICE:$TAG
   - docker push $SHOPPING_SERVICE
 
+  #API ECOMMERCE
+  - export API_ECOMMERCE=matiasdynia/api-ecommerce
+  - docker build -t $API_ECOMMERCE:$TAG ./api-ecommerce
+  - docker tag $API_ECOMMERCE:$TAG
+  - docker push $API_ECOMMERCE
+
   #CONFIG SERVER
   - export $CONFIG_SERVER=matiasdynia/ecommerce-config-server
   - docker build -t $CONFIG_SERVER:$TAG ./config-server

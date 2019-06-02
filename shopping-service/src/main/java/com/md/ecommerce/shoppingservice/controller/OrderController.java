@@ -23,7 +23,7 @@ public class OrderController {
         return orderService.findById(id);
     }
 
-    @PostMapping("")
+    @PostMapping()
     public Order saveOrder(@RequestBody OrderEntity order) {
         return orderService.saveOrder(order);
     }

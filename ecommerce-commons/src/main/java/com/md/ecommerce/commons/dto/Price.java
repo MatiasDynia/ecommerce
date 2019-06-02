@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Price {
 
-    private Double amount;
+    private double amount;
 }
