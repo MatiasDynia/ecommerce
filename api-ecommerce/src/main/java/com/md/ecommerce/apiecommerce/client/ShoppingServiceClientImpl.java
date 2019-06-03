@@ -20,7 +20,7 @@ import java.util.Map;
 @Service
 public class ShoppingServiceClientImpl implements ShoppingServiceClient {
 
-    static final String SHOPPING_SERVICE_HOST = "http://localhost:9003";
+    static final String SHOPPING_SERVICE_HOST = "http://shopping-service";
     static final String BASE_SHOPPING_ORDERS_SERVICE_URL = "/api/shopping/orders/";
 
     private final InventoryServiceClient inventoryServiceClient;
