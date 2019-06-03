@@ -39,6 +39,7 @@ dependencyManagement {
 dependencies {
     implementation files('../localRepository/com/md/ecommerce/ecommerce-commons/1.0.0/ecommerce-commons-1.0.0.jar')
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-ribbon'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
     implementation 'org.modelmapper:modelmapper:2.2.0'

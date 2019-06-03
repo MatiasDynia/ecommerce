@@ -13,8 +13,8 @@ import java.util.List;
 @Service
 public class ClientServiceClientImpl implements ClientServiceClient {
 
-    static final String CLIENT_SERVICE_HOST = "http://localhost:9002";
-    static final String BASE_CLIENT_SERVICE_URL = "/api/client/clients";
+    static final String CLIENT_SERVICE_HOST = "http://client-service";
+    static final String BASE_CLIENT_SERVICE_URL = "/api/client/clients/";
 
     private final RestTemplate restTemplate;
 

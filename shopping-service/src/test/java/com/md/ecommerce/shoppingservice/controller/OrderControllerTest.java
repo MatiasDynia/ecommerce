@@ -29,6 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 public class OrderControllerTest {
 
+    private static final String ORDERS_RESOURCE_BASE_PATH = "/api/shopping/orders/";
+
     @InjectMocks
     private OrderController orderController;
 
@@ -52,7 +54,7 @@ public class OrderControllerTest {
 
         when(orderService.findAllOrders()).thenReturn(orders);
 
-        mockMvc.perform(get("/api/shopping/order"))
+        mockMvc.perform(get(ORDERS_RESOURCE_BASE_PATH))
                 .andExpect(jsonPath("$[0].client.id").value(orders.get(0).getClient().getId()))
                 .andExpect(jsonPath("$[0].products.[0].product.code")
                         .value(orders.get(0).getProducts().get(0).getProduct().getCode()))
@@ -70,7 +72,7 @@ public class OrderControllerTest {
 
         when(orderService.findById(order.getId())).thenReturn(order);
 
-        mockMvc.perform(get("/api/shopping/order/" + order.getId()))
+        mockMvc.perform(get(ORDERS_RESOURCE_BASE_PATH + order.getId()))
                 .andExpect(jsonPath("$.products.[0].product.code")
                         .value(order.getProducts().get(0).getProduct().getCode()))
                 .andExpect(jsonPath("$.products.[1].product.code")
@@ -86,7 +88,7 @@ public class OrderControllerTest {
 
         when(orderService.saveOrder(order)).thenReturn(orderToReturn);
 
-        mockMvc.perform(post("/api/shopping/order")
+        mockMvc.perform(post(ORDERS_RESOURCE_BASE_PATH)
         .contentType(MediaType.APPLICATION_JSON)
         .content("{\n" +
                 "\t\"id\":\"1\",\n" +

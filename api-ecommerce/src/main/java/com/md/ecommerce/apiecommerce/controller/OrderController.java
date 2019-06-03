@@ -29,7 +29,7 @@ public class OrderController {
         return shoppingServiceClient.findOrderById(orderId);
     }
 
-    @PostMapping()
+    @PostMapping
     public Order createOrderByProductsAndClient(@RequestBody OrderRequest orderRequest) {
         return shoppingServiceClient.createOrder(orderRequest);
     }

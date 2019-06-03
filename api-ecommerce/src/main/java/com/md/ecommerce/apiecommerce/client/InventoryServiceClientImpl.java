@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class InventoryServiceClientImpl implements InventoryServiceClient {
 
-    static final String INVENTORY_SERVICE_HOST = "http://localhost:9001";
+    static final String INVENTORY_SERVICE_HOST = "http://inventory-service";
     static final String BASE_INVENTORY_PRODUCTS_SERVICE_URL = "/api/inventory/products/";
 
     private final RestTemplate restTemplate;
