@@ -3,6 +3,7 @@ package com.md.ecommerce.clientservice.service;
 import com.md.ecommerce.clientservice.entity.ClientEntity;
 import com.md.ecommerce.clientservice.exceptions.ClientNotFoundException;
 import com.md.ecommerce.clientservice.repository.ClientRepository;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class ClientServiceImpl implements ClientService {
     ClientRepository clientRepository;
 
     @Override
+    @HystrixCommand
     public ClientEntity findClientById(String id) {
         Optional<ClientEntity> client = clientRepository.findById(id);
 
@@ -32,6 +34,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @HystrixCommand
     public Iterable<ClientEntity> findAll() {
         log.info("Retrieving all clients!");
 
@@ -39,6 +42,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @HystrixCommand
     public ClientEntity save(ClientEntity client) {
         ClientEntity clientSaved = clientRepository.save(client);
 

@@ -5,6 +5,7 @@ import com.md.ecommerce.commons.dto.Client;
 import com.md.ecommerce.commons.dto.Order;
 import com.md.ecommerce.commons.dto.OrderProduct;
 import com.md.ecommerce.commons.dto.OrderState;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -37,6 +38,7 @@ public class ShoppingServiceClientImpl implements ShoppingServiceClient {
     }
 
     @Override
+    @HystrixCommand
     public List<Order> getAllOrders() {
         ResponseEntity<List<Order>> responseEntity = restTemplate
                 .exchange(SHOPPING_SERVICE_HOST + BASE_SHOPPING_ORDERS_SERVICE_URL,
@@ -49,6 +51,7 @@ public class ShoppingServiceClientImpl implements ShoppingServiceClient {
     }
 
     @Override
+    @HystrixCommand
     public Order findOrderById(String id) {
 
         return restTemplate.getForObject(SHOPPING_SERVICE_HOST + BASE_SHOPPING_ORDERS_SERVICE_URL + "{id}",
@@ -57,6 +60,7 @@ public class ShoppingServiceClientImpl implements ShoppingServiceClient {
     }
 
     @Override
+    @HystrixCommand
     public Order createOrder(OrderRequest orderRequest) {
         List<OrderProduct> orderProducts = new ArrayList<>();
 
