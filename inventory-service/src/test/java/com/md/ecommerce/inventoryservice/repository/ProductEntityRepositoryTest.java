@@ -28,7 +28,7 @@ public class ProductEntityRepositoryTest {
 
         productRepository.save(productToSave);
 
-        ProductEntity productFound = productRepository.findByCode(productToSave.getCode());
+        ProductEntity productFound = productRepository.findByCode(productToSave.getCode()).get();
 
         assertEquals(productToSave.getCode(), productFound.getCode());
         assertEquals(productToSave.getName(), productFound.getName());
