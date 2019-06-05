@@ -3,4 +3,4 @@ FROM java:8-jre
 ADD ./build/libs/inventory-service.jar /app/
 CMD ["java", "-Xmx200m", "-jar", "/app/inventory-service.jar"]
 
-EXPOSE 9100
+EXPOSE 8100
