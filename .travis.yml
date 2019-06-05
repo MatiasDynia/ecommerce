@@ -55,3 +55,9 @@ after_success:
   - docker build -t $REGISTRY_SERVER:$TAG ./registry-server
   - docker tag $REGISTRY_SERVER:$TAG
   - docker push $REGISTRY_SERVER
+
+  #MONITORING SERVER
+  - export MONITORING_SERVER=matiasdynia/ecommerce-monitoring-server
+  - docker build -t $MONITORING_SERVER:$TAG ./monitoring-server
+  - docker tag $MONITORING_SERVER:$TAG
+  - docker push $MONITORING_SERVER

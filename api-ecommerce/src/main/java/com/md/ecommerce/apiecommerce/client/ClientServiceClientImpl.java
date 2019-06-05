@@ -1,6 +1,7 @@
 package com.md.ecommerce.apiecommerce.client;
 
 import com.md.ecommerce.commons.dto.Client;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -24,6 +25,7 @@ public class ClientServiceClientImpl implements ClientServiceClient {
     }
 
     @Override
+    @HystrixCommand
     public List<Client> getAllClients() {
         ResponseEntity<List<Client>> responseEntity = restTemplate
                 .exchange(CLIENT_SERVICE_HOST + BASE_CLIENT_SERVICE_URL,
@@ -36,6 +38,7 @@ public class ClientServiceClientImpl implements ClientServiceClient {
     }
 
     @Override
+    @HystrixCommand
     public Client findClientById(String id) {
         return restTemplate.getForObject(CLIENT_SERVICE_HOST + BASE_CLIENT_SERVICE_URL + "{id}",
                 Client.class,
@@ -43,6 +46,7 @@ public class ClientServiceClientImpl implements ClientServiceClient {
     }
 
     @Override
+    @HystrixCommand
     public Client saveClient(Client client) {
         return restTemplate.postForObject(CLIENT_SERVICE_HOST + BASE_CLIENT_SERVICE_URL,
                 client,
