@@ -20,6 +20,8 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @HystrixCommand
     public ClientEntity findClientById(String id) {
+        log.info("Retrieving client " + id + "...");
+
         Optional<ClientEntity> client = clientRepository.findById(id);
 
         if(client.isPresent()) {
@@ -36,7 +38,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @HystrixCommand
     public Iterable<ClientEntity> findAll() {
-        log.info("Retrieving all clients!");
+        log.info("Retrieving all clients...");
 
         return clientRepository.findAll();
     }
@@ -44,6 +46,8 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @HystrixCommand
     public ClientEntity save(ClientEntity client) {
+        log.info("Saving order...");
+
         ClientEntity clientSaved = clientRepository.save(client);
 
         log.info("Client " + clientSaved.getId() + " saved successfully!");

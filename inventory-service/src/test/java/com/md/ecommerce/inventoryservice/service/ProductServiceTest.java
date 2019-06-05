@@ -10,6 +10,7 @@ import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -35,7 +36,7 @@ public class ProductServiceTest {
 
         ProductEntity product = ProductEntity.builder().code("12345").build();
 
-        when(productRepository.findByCode(product.getCode())).thenReturn(product);
+        when(productRepository.findByCode(product.getCode())).thenReturn(Optional.of(product));
 
         ProductEntity productFound = productService.findByCode(product.getCode());
 

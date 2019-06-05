@@ -6,6 +6,7 @@ import com.md.ecommerce.commons.dto.Order;
 import com.md.ecommerce.commons.dto.OrderProduct;
 import com.md.ecommerce.commons.dto.OrderState;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class ShoppingServiceClientImpl implements ShoppingServiceClient {
 
@@ -40,6 +42,8 @@ public class ShoppingServiceClientImpl implements ShoppingServiceClient {
     @Override
     @HystrixCommand
     public List<Order> getAllOrders() {
+        log.info("Getting all orders...");
+
         ResponseEntity<List<Order>> responseEntity = restTemplate
                 .exchange(SHOPPING_SERVICE_HOST + BASE_SHOPPING_ORDERS_SERVICE_URL,
                         HttpMethod.GET,
@@ -53,6 +57,7 @@ public class ShoppingServiceClientImpl implements ShoppingServiceClient {
     @Override
     @HystrixCommand
     public Order findOrderById(String id) {
+        log.info("Finding order " + id + "...");
 
         return restTemplate.getForObject(SHOPPING_SERVICE_HOST + BASE_SHOPPING_ORDERS_SERVICE_URL + "{id}",
                 Order.class,
@@ -62,6 +67,8 @@ public class ShoppingServiceClientImpl implements ShoppingServiceClient {
     @Override
     @HystrixCommand
     public Order createOrder(OrderRequest orderRequest) {
+        log.info("Placing new order...");
+
         List<OrderProduct> orderProducts = new ArrayList<>();
 
         for (Map.Entry<String, Integer> orderProductEntry : orderRequest.getProducts().entrySet()) {

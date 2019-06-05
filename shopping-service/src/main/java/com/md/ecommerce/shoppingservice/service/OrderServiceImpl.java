@@ -6,11 +6,13 @@ import com.md.ecommerce.shoppingservice.exception.OrderNotFoundException;
 import com.md.ecommerce.shoppingservice.mapper.OrderMapper;
 import com.md.ecommerce.shoppingservice.repository.OrderRepository;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -23,9 +25,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @HystrixCommand
     public Order findById(String id) {
+        log.info("Retrieving order " + id + "...");
+
         Optional<OrderEntity> orderFound = orderRepository.findById(id);
 
         if(orderFound.isPresent()) {
+            log.info("Order " + id + "found!");
+
             return OrderMapper.INSTANCE.map(orderFound.get());
         } else {
             throw new OrderNotFoundException("Order " + id + " not found!!");
@@ -35,6 +41,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @HystrixCommand
     public Iterable<Order> findAllOrders() {
+        log.info("Retrieving all orders...");
+
         return OrderMapper.INSTANCE.map(orderRepository.findAll());
     }
 
@@ -43,6 +51,12 @@ public class OrderServiceImpl implements OrderService {
     public Order saveOrder(OrderEntity orderEntity) {
         orderEntity.setId(sequenceGeneratorService.generateSequence(OrderEntity.SEQUENCE_NAME));
 
-        return OrderMapper.INSTANCE.map(orderRepository.save(orderEntity));
+        log.info("Saving new order...");
+
+        Order orderSaved = OrderMapper.INSTANCE.map(orderRepository.save(orderEntity));
+
+        log.info("Order " + orderSaved.getId() + " successfully saved!");
+
+        return orderSaved;
     }
 }

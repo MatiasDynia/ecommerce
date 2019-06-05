@@ -2,6 +2,7 @@ package com.md.ecommerce.apiecommerce.client;
 
 import com.md.ecommerce.commons.dto.Product;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -11,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class InventoryServiceClientImpl implements InventoryServiceClient {
 
@@ -27,6 +29,8 @@ public class InventoryServiceClientImpl implements InventoryServiceClient {
     @Override
     @HystrixCommand
     public List<Product> getAllProducts() {
+        log.info("Getting all products...");
+
         ResponseEntity<List<Product>> responseEntity = restTemplate
                 .exchange(INVENTORY_SERVICE_HOST + BASE_INVENTORY_PRODUCTS_SERVICE_URL,
                         HttpMethod.GET,
@@ -40,6 +44,7 @@ public class InventoryServiceClientImpl implements InventoryServiceClient {
     @Override
     @HystrixCommand
     public Product findProductByCode(String code) {
+        log.info("Finding product " + code + "...");
 
         return restTemplate
                 .getForObject(INVENTORY_SERVICE_HOST + BASE_INVENTORY_PRODUCTS_SERVICE_URL +"{code}",
@@ -50,6 +55,7 @@ public class InventoryServiceClientImpl implements InventoryServiceClient {
     @Override
     @HystrixCommand
     public Product saveProduct(Product product) {
+        log.info("Creating new product...");
 
         return restTemplate
                 .postForObject(INVENTORY_SERVICE_HOST + BASE_INVENTORY_PRODUCTS_SERVICE_URL,
