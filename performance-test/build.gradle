@@ -14,6 +14,10 @@ dependencies {
     implementation "org.apache.jmeter:ApacheJMeter_functions:5.1"
 }
 
+test {
+    exclude '**/*TestPlan*'
+}
+
 task createPerformanceTestDirectories {
     mkdir "${projectDir}/jmxFiles/"
     mkdir "${projectDir}/reports/"
