@@ -28,4 +28,9 @@ public class OrderController {
         return orderService.saveOrder(order);
     }
 
+    @PutMapping
+    public Order updateOrderState(@RequestParam("id") String id, @RequestParam("state") String state) {
+        return orderService.updateOrderStatus(id, state);
+    }
+
 }

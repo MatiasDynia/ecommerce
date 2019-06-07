@@ -1,8 +1,10 @@
 package com.md.ecommerce.shoppingservice.controller;
 
 import com.md.ecommerce.commons.dto.Order;
+import com.md.ecommerce.commons.dto.OrderState;
 import com.md.ecommerce.shoppingservice.TestUtils;
 import com.md.ecommerce.shoppingservice.entity.OrderEntity;
+import com.md.ecommerce.shoppingservice.entity.OrderStateEntity;
 import com.md.ecommerce.shoppingservice.service.OrderService;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,8 +22,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -122,7 +123,8 @@ public class OrderControllerTest {
                 "\t\t\"firstName\":\"John\",\n" +
                 "\t\t\"lastName\":\"Doe\",\n" +
                 "\t\t\"address\":\"fake address 123\",\n" +
-                "\t\t\"phone\":\"123456789\"},\n" +
+                "\t\t\"phone\":\"123456789\",\n" +
+                "\t\t\"mail\" : \"test@mail.com\"},\n" +
                 "\t\"orderState\":\"PREPARING\",\n" +
                 "\t\"date\":[2019,5,31]\n" +
                 "}"))
@@ -134,5 +136,22 @@ public class OrderControllerTest {
                         .value(order.getProducts().get(1).getProduct().getCode()))
                 .andExpect(jsonPath("$.client.id").value(order.getClient().getId()))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldUpdateOrderStatus() throws Exception {
+        Order order = TestUtils.createTestOrderDto();
+
+        Order orderUpdated = TestUtils.createTestOrderDto();
+        orderUpdated.setOrderState(OrderState.DELIVERED);
+
+        when(orderService.updateOrderStatus(order.getId(), OrderStateEntity.DELIVERED.toString())).thenReturn(orderUpdated);
+
+        mockMvc.perform(put(ORDERS_RESOURCE_BASE_PATH)
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("id", order.getId())
+                .param("state", orderUpdated.getOrderState().toString()))
+                .andExpect(jsonPath("$.id").value(order.getId()))
+                .andExpect(jsonPath("$.orderState").value(orderUpdated.getOrderState().toString()));
     }
 }

@@ -26,6 +26,7 @@ public class TestUtils {
                 .lastName("Doe")
                 .address("fake address 123")
                 .phone("123456789")
+                .mail("test@mail.com")
                 .build();
 
         List<OrderProductEntity> productList = new ArrayList<>();

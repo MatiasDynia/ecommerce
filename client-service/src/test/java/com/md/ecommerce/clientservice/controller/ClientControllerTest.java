@@ -78,7 +78,8 @@ public class ClientControllerTest {
                         "  \"firstName\" : \"john\",\n" +
                         "  \"lastName\" : \"wolf\",\n" +
                         "  \"address\" : \"fake address 123\",\n" +
-                        "  \"phone\" : \"9876543\"\n" +
+                        "  \"phone\" : \"9876543\",\n" +
+                        "  \"mail\" : \"test@mail.com\"\n" +
                         "}"))
                 .andExpect(jsonPath("$.id").value(client.getId()))
                 .andExpect(jsonPath("$.firstName").value(client.getFirstName()))

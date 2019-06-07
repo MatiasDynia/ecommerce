@@ -2,6 +2,7 @@ package com.md.ecommerce.shoppingservice.service;
 
 import com.md.ecommerce.commons.dto.Order;
 import com.md.ecommerce.shoppingservice.entity.OrderEntity;
+import com.md.ecommerce.shoppingservice.entity.OrderStateEntity;
 import com.md.ecommerce.shoppingservice.exception.OrderNotFoundException;
 import com.md.ecommerce.shoppingservice.mapper.OrderMapper;
 import com.md.ecommerce.shoppingservice.repository.OrderRepository;
@@ -58,5 +59,27 @@ public class OrderServiceImpl implements OrderService {
         log.info("Order " + orderSaved.getId() + " successfully saved!");
 
         return orderSaved;
+    }
+
+    @Override
+    public Order updateOrderStatus(String id, String state) {
+        log.info("Retrieving order " + id + "...");
+
+        Optional<OrderEntity> orderFound = orderRepository.findById(id);
+
+        if(orderFound.isPresent()) {
+            log.info("Order " + id + "found!");
+
+            OrderEntity orderToUpdate = orderFound.get();
+            orderToUpdate.setOrderState(OrderStateEntity.valueOf(state.toUpperCase()));
+
+            Order orderUpdated = OrderMapper.INSTANCE.map(orderRepository.save(orderToUpdate));
+
+            log.info("Order " + id + "updated!");
+
+            return orderUpdated;
+        } else {
+            throw new OrderNotFoundException("Order " + id + " not found!!");
+        }
     }
 }

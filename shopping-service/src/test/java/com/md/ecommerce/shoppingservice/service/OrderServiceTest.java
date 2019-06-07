@@ -1,8 +1,10 @@
 package com.md.ecommerce.shoppingservice.service;
 
 import com.md.ecommerce.commons.dto.Order;
+import com.md.ecommerce.commons.dto.OrderState;
 import com.md.ecommerce.shoppingservice.TestUtils;
 import com.md.ecommerce.shoppingservice.entity.OrderEntity;
+import com.md.ecommerce.shoppingservice.entity.OrderStateEntity;
 import com.md.ecommerce.shoppingservice.repository.OrderRepository;
 import org.assertj.core.util.IterableUtil;
 import org.junit.Test;
@@ -70,5 +72,20 @@ public class OrderServiceTest {
 
         verify(orderRepository).save(order);
         assertEquals(order.getId(), orderSaved.getId());
+    }
+
+    @Test
+    public void shouldUpdateOrderState() {
+        OrderEntity order = TestUtils.createTestOrder();
+
+        when(orderRepository.findById(order.getId())).thenReturn(Optional.of(order));
+        order.setOrderState(OrderStateEntity.DELIVERED);
+        when(orderRepository.save(order)).thenReturn(order);
+
+        Order orderUpdated = orderService.updateOrderStatus(order.getId(), OrderState.DELIVERED.toString());
+
+        verify(orderRepository).findById(order.getId());
+        verify(orderRepository).save(order);
+        assertEquals(orderUpdated.getOrderState(), OrderState.DELIVERED);
     }
 }

@@ -8,4 +8,5 @@ public interface OrderService {
     Order findById(String id);
     Iterable<Order> findAllOrders();
     Order saveOrder(OrderEntity orderEntity);
+    Order updateOrderStatus(String orderId, String state);
 }

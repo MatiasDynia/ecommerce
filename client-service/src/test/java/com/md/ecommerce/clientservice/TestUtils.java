@@ -11,6 +11,7 @@ public class TestUtils {
                 .lastName("wolf")
                 .address("fake address 123")
                 .phone("9876543")
+                .mail("test@mail.com")
                 .build();
     }
 }
